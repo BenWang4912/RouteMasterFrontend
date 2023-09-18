@@ -112,7 +112,7 @@ namespace RouteMasterBackend.Controllers
                 }
                     _context.SaveChanges();
                     
-                return Ok(new { success = true, message = "Successfully added to cart." });
+                return Ok(new { success = true, message = "已成功加入購物車!" });
             }
 
             catch(Exception ex)
@@ -133,7 +133,7 @@ namespace RouteMasterBackend.Controllers
                     //existingCartItem.Quantity -= dto.quantity;
                     _context.CartExtraServicesDetails.Remove(existingCartItem);
                     _context.SaveChanges();
-                    return Ok(new { success = true, message = "Successfully removed from cart." });
+                    return Ok(new { success = true, message = "已成功刪除!" });
                 }
                 else
                 {
@@ -171,7 +171,7 @@ namespace RouteMasterBackend.Controllers
                  }           
                 _context.SaveChanges();
              
-                return Ok(new { success = true, message = "Succesfully added to cart." });
+                return Ok(new { success = true, message = "已成功加入購物車!" });
             }
             catch(Exception ex)
             {
@@ -205,7 +205,7 @@ namespace RouteMasterBackend.Controllers
                     _context.CartAccommodationDetails.Add(cartItem);
                 }          
                 _context.SaveChanges();
-                return Ok(new { success = true, message = "Succesfully added to cart." });
+                return Ok(new { success = true, message = "已成功加入購物車!" });
 
             }
             catch(Exception ex) 

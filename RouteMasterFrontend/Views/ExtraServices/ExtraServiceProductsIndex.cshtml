@@ -5,7 +5,6 @@
 }
 
 
-
 <h1>ExtraServiceProductsIndex</h1>
 
 <p>
@@ -71,6 +70,7 @@
     </tbody>
 
 </table>
+<script src="../js/sweetalert2.all.min.js"></script>
 <script>
     $(document).ready(function () {
       
@@ -107,7 +107,7 @@
             }), 
             success: function (response) {
                 if (response.success) {
-                    alert(response.message);
+                    Swal.fire(response.message);
                     console.log("123");
                     reloadCartItems();
                 }

@@ -13,3 +13,50 @@
         <iframe id="power-bi" title="後臺管理" width="1296" height="729" src="https://app.powerbi.com/reportEmbed?reportId=f5a1e259-ca9e-42f2-b8b8-4dbe19af63e5&autoAuth=true&ctid=8251f521-0945-477d-adca-501eb5c3bb9b&navContentPaneEnabled=false" frameborder="0" allowFullScreen="true"></iframe>
     </div>
 </div>
+
+@section Scripts{
+    @* <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.10/signalr.min.js" integrity="sha512-P5G3EZ6/6i+YfHLRhH32IxWKYtw0XyeYODsBn6eXzHt7W0Z+MZ1kySXUT0ec0+WuxHEoYkjHlSnTCItpg1XMGg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> *@
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script>
+        // const connection = new signalR.HubConnectionBuilder()
+        //     .withUrl("/bookingHub")
+        //     .build();
+
+        // connection.start().then(function () {
+        //     console.log("SignalR connected!");
+        // }).catch(function (err) {
+        //     console.error(err);
+        // });
+
+        // connection.on("ReceiveBookingMessage", function () {
+        //     // 在此處更新預訂的狀態，例如顯示為 "已確認" 或 "已取消"
+        //     console.log(`Booking Recived!`);
+        // });
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/bookingHub")  // 替換成您的 Hub 的 URL
+            .configureLogging(signalR.LogLevel.Information)
+            .build();
+
+        // 定義 Hello 客戶端方法
+        connection.on("Hello", function (success) {
+            if (success) {
+                console.log("初始化连接成功!");
+            } else {
+                console.log("初始化连接失败!");
+            }
+        });
+
+        // 定義 SendClient 客戶端方法
+        connection.on("SendClient", function (data) {
+            console.log(data);
+        });
+
+        // 啟動連接
+        connection.start().then(function () {
+            console.log("SignalR 連接成功!");
+            connection.invoke("hello", "10000");
+        }).catch(function (err) {
+            return console.error(err.toString());
+        });
+    </script>
+}

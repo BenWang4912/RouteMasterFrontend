@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using RouteMasterFrontend.EFModels;
+using RouteMasterFrontend.Models.Infra;
 using RouteMasterFrontend.Models.Infra.DapperRepositories;
 using RouteMasterFrontend.Models.Interfaces;
 using RouteMasterFrontend.Models.Services;
@@ -62,6 +63,8 @@ builder.Services.AddTransient<ICoupon, CouponService>();
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -81,10 +84,7 @@ app.UseCookiePolicy();
 app.UseAuthentication();
 app.UseAuthorization();
 
-
-
-
-
+//app.MapHub<BookingHub>("/bookingHub");
 
 app.MapControllerRoute(
 	name: "default",

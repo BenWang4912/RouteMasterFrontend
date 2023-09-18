@@ -215,7 +215,7 @@
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         let baseAddress = "https://localhost:7251";
         let vueApp = {
@@ -383,7 +383,7 @@
                         quantity: this.inputQuantity
                     };
                     console.log(postData);
-
+                    Swal.fire(postData)
                     fetch(`${baseAddress}/api/Carts/addactivity`, {
                         method:'POST',
                         headers: {
@@ -394,7 +394,8 @@
                         .then(response => response.json())
                         .then(data => {
                             if(data.success) {
-                                alert(data.message);
+                                Swal.fire(data.message);
+                                //alert(data.message);
                                 this.reloadCartItems();
                             }else{
                                 alert(data.message || '商品已售完');

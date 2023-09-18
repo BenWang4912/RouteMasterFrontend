@@ -12,6 +12,8 @@ using ECPay.Payment.Integration;
 using Microsoft.AspNetCore.Session;
 using RouteMasterFrontend.Models.Dto;
 using System.Diagnostics.Metrics;
+using Microsoft.AspNetCore.SignalR;
+using RouteMasterFrontend.Models.Infra;
 
 namespace RouteMasterFrontend.Controllers
 {
@@ -19,14 +21,16 @@ namespace RouteMasterFrontend.Controllers
     public class CartsController : Controller
     {
         private readonly HttpClient _httpClient;
+        //private readonly IHubContext<BookingHub> _hubContext;
         private readonly RouteMasterContext _context;
         private const string MerchantID = "3002607";
         private const string PaymentApiUrl = "https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5";
         private const string HashKey = "pwFHCqoQZGmho4w6"; 
         private const string HashIV = "EkRm7iFT261dpevs";
-        public CartsController(RouteMasterContext context)
+        public CartsController(RouteMasterContext context/*, IHubContext<BookingHub> hubContext*/)
         {
             _context = context;
+            //_hubContext = hubContext;
         }
       
         // GET: Carts
@@ -224,7 +228,7 @@ namespace RouteMasterFrontend.Controllers
                     _context.Cart_ExtraServicesDetails.Remove(cartItem);
                     _context.SaveChanges();
 
-                    return Json(new { success = true, message = "Successfully removed from cart.", extraserviceId = extraserviceId });
+                    return Json(new { success = true, message = "已成功刪除!", extraserviceId = extraserviceId });
                 }
                 else
                 {
@@ -318,7 +322,7 @@ namespace RouteMasterFrontend.Controllers
                 {
                     _context.Cart_AccommodationDetails.Remove(cartItem);
                     _context.SaveChanges();
-                    return Json(new {success=true, message="Successfully removed from cart.", roomProductId = roomProductId });
+                    return Json(new {success=true, message="已成功刪除!", roomProductId = roomProductId });
                 }
                 else
                 {
@@ -375,7 +379,7 @@ namespace RouteMasterFrontend.Controllers
                     _context.Cart_ActivitiesDetails.Remove(cartItem);
                     _context.SaveChanges();
 
-                    return Json(new {success=true, message="Successfully  removed from cart.", activitiesId=activitiesId});
+                    return Json(new {success=true, message="已成功刪除!", activitiesId=activitiesId});
                 }
                 else
                 {
@@ -896,7 +900,7 @@ namespace RouteMasterFrontend.Controllers
                 return Json(new { success = false, message = "更新數量時出現錯誤：" + ex.Message });
             }
         }
-        public ActionResult ShowPaymentResult(int memberId,int selectedCouponId)
+        public async Task<ActionResult> ShowPaymentResult(int memberId,int selectedCouponId)
         {
             var postData = Request.Form;
 
@@ -904,10 +908,12 @@ namespace RouteMasterFrontend.Controllers
             {
                 var resultStatus = postData["RtnCode"];
                 var resultMessage = postData["RtnMsg"];
-
                 if (resultStatus == "1")
                 {
                     ProcessCheckout(memberId, selectedCouponId, null);
+                    //await BookingHub.Instance.SendBookingMessage();
+
+                    BookingHub.Instance.SendClient("10000");
                     return Redirect("https://localhost:7145/Carts/ConfirmPayment");
                 }
                 else

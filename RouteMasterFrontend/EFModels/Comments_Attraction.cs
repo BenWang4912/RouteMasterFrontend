@@ -17,7 +17,7 @@ namespace RouteMasterFrontend.EFModels
         public int MemberId { get; set; }
         public int AttractionId { get; set; }
         public int Score { get; set; }
-        public string Content { get; set; }
+        public string? Content { get; set; }
         public int? StayHours { get; set; }
         public int? Price { get; set; }
         public DateTime CreateDate { get; set; }
