@@ -63,10 +63,6 @@
 
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="Views\Shared\Components\TopTenAtt\TopTenAttPartialView.cshtml" />
-  </ItemGroup>
-
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="https://json.schemastore.org/appsettings.json" wwwroot_4lib_4bootstrap_4dist_4css_4bootstrap-reboot_1css_1map__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

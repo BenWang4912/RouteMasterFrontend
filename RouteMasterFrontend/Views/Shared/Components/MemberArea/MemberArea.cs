@@ -40,9 +40,9 @@ namespace RouteMasterFrontend.Views.Shared.Components.MemberPartial
                 case 0:
                     return View("MemEdit", myMember);
                 case 1:
-                    return View("MemOrder",memberid);
-                case 2:                   
-                    return View("EditPassword", modelPasword);
+					return View("EditPassword", modelPasword);
+				case 2:
+					return View("MemOrder", memberid);					
                 case 3:
                     return View("_MessageNonVue");
                 case 4:

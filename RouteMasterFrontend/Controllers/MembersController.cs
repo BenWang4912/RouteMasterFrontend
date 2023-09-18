@@ -488,7 +488,7 @@ namespace RouteMasterFrontend.Controllers
         }
 
         [AcceptVerbs("GET")]
-        public IActionResult CheckRepeatAccount(string Account)
+        public  IActionResult CheckRepeatAccount(string Account)
         {
             var isAccountReapeat = _context.Members.FirstOrDefault(m=>m.Account == Account);
 

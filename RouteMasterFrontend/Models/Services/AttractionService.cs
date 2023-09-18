@@ -19,10 +19,10 @@ namespace RouteMasterFrontend.Models.Services
             return _repo.Search();
         }
 
-        public IEnumerable<AttractionIndexDto> GetTopTen()
-        {
-            return _repo.GetTopTen();
-        }
+        //public IEnumerable<AttractionIndexDto> GetTopTen()
+        //{
+        //    return _repo.GetTopTen();
+        //}
 
         public AttractionDetailDto Get(int id)
         {

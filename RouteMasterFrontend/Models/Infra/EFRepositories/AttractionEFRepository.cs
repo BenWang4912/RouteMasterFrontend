@@ -181,81 +181,81 @@ namespace RouteMasterFrontend.Models.Infra.EFRepositories
             return result;
         }
 
-        public IEnumerable<AttractionIndexDto> GetTopTen()
-        {
-            DateTime thirtyDaysAgo = DateTime.Now.AddDays(-30);
+        //public IEnumerable<AttractionIndexDto> GetTopTen()
+        //{
+        //    DateTime thirtyDaysAgo = DateTime.Now.AddDays(-30);
 
-            var query = _db.Attractions
-                .AsNoTracking()
-                .Include(a => a.AttractionCategory)
-                .Include(a => a.Region)
-                .Include(a => a.Town)
-                .Include(a => a.AttractionImages)
-                .Include(a => a.Comments_Attractions)
-                .Include(a => a.Tags)
-                .Include(a => a.AttractionClicks)
-                .ToList();
+        //    var query = _db.Attractions
+        //        .AsNoTracking()
+        //        .Include(a => a.AttractionCategory)
+        //        .Include(a => a.Region)
+        //        .Include(a => a.Town)
+        //        .Include(a => a.AttractionImages)
+        //        .Include(a => a.Comments_Attractions)
+        //        .Include(a => a.Tags)
+        //        .Include(a => a.AttractionClicks)
+        //        .ToList();
 
-            // 過濾只保留在過去30天內有點擊紀錄的景點
-            query = query.Where(a => a.AttractionClicks
-                                .Any(ac => ac.ClickDate >= thirtyDaysAgo))
-                 .ToList();
+        //    // 過濾只保留在過去30天內有點擊紀錄的景點
+        //    query = query.Where(a => a.AttractionClicks
+        //                        .Any(ac => ac.ClickDate >= thirtyDaysAgo))
+        //         .ToList();
 
-            // 依照過去30天內的點擊數量，將景點由高到低排序
-            query = query.OrderByDescending(a => a.AttractionClicks
-                                                .Count(ac => ac.ClickDate >= thirtyDaysAgo))
-                         .ToList();
+        //    // 依照過去30天內的點擊數量，將景點由高到低排序
+        //    query = query.OrderByDescending(a => a.AttractionClicks
+        //                                        .Count(ac => ac.ClickDate >= thirtyDaysAgo))
+        //                 .ToList();
 
-            // 只保留前十個點擊數量最高的景點
-            query = query.Take(10).ToList();
+        //    // 只保留前十個點擊數量最高的景點
+        //    query = query.Take(10).ToList();
 
 
-            var result = query.Select(q => new AttractionIndexDto
-                {
-                    Id = q.Id,
-                    AttractionCategory = q.AttractionCategory.Name,
-                    Name = q.Name,
-                    Region = q.Region.Name,
-                    Town = q.Town.Name,
-                    Image = q.AttractionImages
-                        .Where(i => i.AttractionId == q.Id)
-                        .Select(i => i.Image)
-                        .FirstOrDefault() ?? string.Empty,
-                    Description = q.Description,
-                    Tags = q.Tags
-                        .Select(t => t.Name)
-                        .ToList(),
-                    Score = Math.Round(_db.Comments_Attractions
-                        .Where(c => c.AttractionId == q.Id)
-                        .Select(c => c.Score)
-                        .DefaultIfEmpty()
-                        .Average(), 1),
-                    ScoreCount = _db.Comments_Attractions
-                        .Where(c => c.AttractionId == q.Id)
-                        .Count(),
-                    Hours = Math.Round(_db.Comments_Attractions
-                        .Where(c => c.AttractionId == q.Id && c.StayHours != null)
-                        .Select(c => c.StayHours.Value)
-                        .DefaultIfEmpty()
-                        .Average(), 1),
-                    HoursCount = _db.Comments_Attractions
-                        .Where(c => c.AttractionId == q.Id && c.StayHours != null)
-                        .Count(),
-                    Price = (int)Math.Round(_db.Comments_Attractions
-                        .Where(c => c.AttractionId == q.Id && c.Price != null)
-                        .Select(c => c.Price.Value)
-                        .DefaultIfEmpty()
-                        .Average(), 0),
-                    PriceCount = _db.Comments_Attractions
-                        .Where(c => c.AttractionId == q.Id && c.Price != null)
-                        .Count(),
-                    Clicks = q.AttractionClicks
-                        .Where(a => a.AttractionId == q.Id)
-                        .Count()
-                }).ToList();
+        //    var result = query.Select(q => new AttractionIndexDto
+        //        {
+        //            Id = q.Id,
+        //            AttractionCategory = q.AttractionCategory.Name,
+        //            Name = q.Name,
+        //            Region = q.Region.Name,
+        //            Town = q.Town.Name,
+        //            Image = q.AttractionImages
+        //                .Where(i => i.AttractionId == q.Id)
+        //                .Select(i => i.Image)
+        //                .FirstOrDefault() ?? string.Empty,
+        //            Description = q.Description,
+        //            Tags = q.Tags
+        //                .Select(t => t.Name)
+        //                .ToList(),
+        //            Score = Math.Round(_db.Comments_Attractions
+        //                .Where(c => c.AttractionId == q.Id)
+        //                .Select(c => c.Score)
+        //                .DefaultIfEmpty()
+        //                .Average(), 1),
+        //            ScoreCount = _db.Comments_Attractions
+        //                .Where(c => c.AttractionId == q.Id)
+        //                .Count(),
+        //            Hours = Math.Round(_db.Comments_Attractions
+        //                .Where(c => c.AttractionId == q.Id && c.StayHours != null)
+        //                .Select(c => c.StayHours.Value)
+        //                .DefaultIfEmpty()
+        //                .Average(), 1),
+        //            HoursCount = _db.Comments_Attractions
+        //                .Where(c => c.AttractionId == q.Id && c.StayHours != null)
+        //                .Count(),
+        //            Price = (int)Math.Round(_db.Comments_Attractions
+        //                .Where(c => c.AttractionId == q.Id && c.Price != null)
+        //                .Select(c => c.Price.Value)
+        //                .DefaultIfEmpty()
+        //                .Average(), 0),
+        //            PriceCount = _db.Comments_Attractions
+        //                .Where(c => c.AttractionId == q.Id && c.Price != null)
+        //                .Count(),
+        //            Clicks = q.AttractionClicks
+        //                .Where(a => a.AttractionId == q.Id)
+        //                .Count()
+        //        }).ToList();
 
-            return result;
-        }
+        //    return result;
+        //}
 
         public IEnumerable<AttractionIndexDto> Search()
         {

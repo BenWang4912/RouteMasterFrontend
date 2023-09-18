@@ -55,12 +55,13 @@
 			transition: 2s ease-out;
 		}
 	</style>
-
+	
 
 
 	@await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
+
 		<!-- ***** Preloader Start ***** -->
 		<div id="js-preloader" class="js-preloader">
 			<div class="preloader-inner">
@@ -101,10 +102,10 @@
 							<!-- ***** Logo End ***** -->
 							<!-- ***** Menu Start ***** -->
 							<ul class="nav">
-								<li class=""><a class="nav-link text-dark" asp-area="" asp-controller="Accommodations" asp-action="Index">住宿</a></li>
-								@*<li class=""><a class="nav-link text-dark" asp-area="" asp-controller="Attractions" asp-action="Index">景點</a></li>*@
+@*								<li class=""><a class="nav-link text-dark" asp-area="" asp-controller="Accommodations" asp-action="Index" hide>住宿</a></li>
+*@								@*<li class=""><a class="nav-link text-dark" asp-area="" asp-controller="Attractions" asp-action="Index">景點</a></li>*@
 
-							<li class="nav-item dropdown">
+@*							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 									景點
 								</a>
@@ -113,22 +114,22 @@
 									<li><a class="nav-link text-dark" asp-area="" asp-controller="Attractions" asp-action="Map">景點地圖</a></li>
 								</ul>
 							</li>
-		
-								<li class="nav-item dropdown">
+*@		
+@*								<li class="nav-item dropdown">
 									<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 										行程
 									</a>
 									<ul class="dropdown-menu">						
 									<li><a class="nav-link text-dark" asp-area="" asp-controller="Activities" asp-action="Index">活動</a></li>
 									<li><a class="nav-link text-dark" asp-area="" asp-controller="ExtraServices" asp-action="Index">服務</a></li>
-									@*<li><a class="nav-link text-dark" asp-area="" asp-controller="TravelPlans" asp-action="Create">行程規劃</a></li>*@
+									
 
 									<li><a class="nav-link text-dark" asp-area="" asp-controller="TravelPlans" asp-action="CreateTravelVuePage">行程規劃</a></li>
 
 									<li><a class="nav-link text-dark" asp-area="" asp-controller="TravelPlans" asp-action="PackageTourList">套裝行程</a></li>	
 									</ul>
-								</li>
-							<li><a class="nav-link text-dark" asp-area="" asp-controller="FAQ" asp-action="Index">常見問題</a></li>
+								</li>*@								
+								@*<li><a class="nav-link text-dark" asp-area="" asp-controller="FAQ" asp-action="Index">常見問題</a></li>*@
 							
 
 								@{
